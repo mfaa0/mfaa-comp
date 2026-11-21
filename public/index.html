@@ -1,1 +1,76 @@
-
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MFAA AI Company</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151d32;--line:#293653;--gold:#e9bd68;--muted:#9aa8c2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#202d4a,#0b1020 60%);font-family:Tahoma,Arial;color:#f4f6fb}
+header{padding:22px 18px;text-align:center;border-bottom:1px solid var(--line)}h1{margin:0;color:var(--gold);font-size:25px}header p{color:var(--muted);margin:8px 0 0}
+main{max-width:1100px;margin:auto;padding:18px}.status{padding:12px 14px;background:#17243a;border:1px solid var(--line);border-radius:12px;margin-bottom:18px;color:#cbd7ee}
+.office{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:linear-gradient(145deg,#1a2540,#111a2e);border:1px solid var(--line);border-radius:17px;padding:16px;min-height:180px;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:#e9bd6810;left:-20px;top:-20px}
+.avatar{font-size:38px;display:inline-block;animation:float 2.8s ease-in-out infinite}.card:nth-child(2n) .avatar{animation-delay:.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.card h3{margin:7px 0 4px;color:var(--gold)}.role,.taskhint{color:var(--muted);font-size:13px}.state{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:20px;background:#253650;color:#b9c9e5;font-size:12px}
+section{background:#121b2e;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:18px}
+label{display:block;margin:8px 0;color:#dce5f5}textarea,input{width:100%;background:#0b1324;color:white;border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit}
+button{background:var(--gold);color:#21190c;border:0;border-radius:10px;padding:11px 16px;font-weight:bold;margin-top:10px;cursor:pointer}button.secondary{background:#293956;color:#fff;margin-inline-start:6px}
+.result{white-space:pre-wrap;line-height:1.8;background:#0a1221;padding:13px;border-radius:10px;margin-top:12px;max-height:420px;overflow:auto}
+.small{color:var(--muted);font-size:12px}.taskrow{border-bottom:1px solid var(--line);padding:12px 0}
+@media(max-width:500px){h1{font-size:21px}main{padding:12px}}
+</style></head>
+<body>
+<header><h1>🏢 MFAA AI COMPANY</h1><p>مكتب المدير التنفيذي • فريق الذكاء الاصطناعي</p></header>
+<main>
+<div class="status" id="serverStatus">جاري فحص اتصال الخادم...</div>
+<div class="office" id="staff">
+<div class="card"><span class="avatar">🔎</span><h3>الباحث</h3><div class="role">باحث الترندات</div><div class="taskhint">اكتشاف الأفكار والاتجاهات</div><span class="state">جاهز</span></div>
+<div class="card"><span class="avatar">✍️</span><h3>كاتب السيناريو</h3><div class="role">كاتب المحتوى</div><div class="taskhint">كتابة النص والحوار</div><span class="state">جاهز</span></div>
+<div class="card"><span class="avatar">🎨</span><h3>مصمم الشخصيات</h3><div class="role">مصمم بصري</div><div class="taskhint">تصميم الشخصيات والمشاهد</div><span class="state">جاهز</span></div>
+<div class="card"><span class="avatar">🎬</span><h3>مهندس الأنيميشن</h3><div class="role">مخطط حركة</div><div class="taskhint">تخطيط اللقطات والحركة</div><span class="state">جاهز</span></div>
+<div class="card"><span class="avatar">🎞️</span><h3>المونتير</h3><div class="role">محرر الفيديو</div><div class="taskhint">خطة المونتاج والمؤثرات</div><span class="state">جاهز</span></div>
+<div class="card"><span class="avatar">📣</span><h3>مسؤول النشر</h3><div class="role">مراجع النشر</div><div class="taskhint">تجهيز الوصف والهاشتاجات</div><span class="state">جاهز</span></div>
+</div>
+<section>
+<h2>إرسال مهمة إلى موظف</h2>
+<label for="agent">اختر الموظف</label>
+<select id="agent" style="width:100%;padding:12px;background:#0b1324;color:white;border:1px solid #293653;border-radius:10px">
+<option value="researcher">الباحث</option><option value="writer">كاتب السيناريو</option><option value="designer">مصمم الشخصيات</option><option value="animator">مهندس الأنيميشن</option><option value="editor">المونتير</option><option value="publisher">مسؤول النشر</option>
+</select>
+<label for="task">اكتب المهمة</label><textarea id="task" rows="4" placeholder="مثال: اقترح فكرة فيديو قصير عن مواقف موظفي الفنادق..."></textarea>
+<button id="run">إرسال المهمة للموظف</button>
+<div id="result" class="result" hidden></div>
+</section>
+<section><h2>آخر المهام</h2><div id="tasks" class="small">لا توجد مهام بعد.</div></section>
+<section><h2>موافقات المالك</h2><p class="small">أي مهمة نشر تظهر هنا للمراجعة. الموافقة هنا لا تنشر المحتوى تلقائيًا.</p><div id="approvals" class="small">لا توجد طلبات موافقة.</div></section>
+<p class="small">نسخة تأسيسية: الموظفون ينفذون مهام نصية عبر API بعد ضبط الخادم. لا يوجد نشر خارجي أو إرسال أو دفع مفعّل.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+async function refresh(){
+ try{
+  const h=await fetch('/api/health').then(r=>r.json());
+  $('serverStatus').textContent=h.apiConfigured?'🟢 '+h.message:'🟡 '+h.message+' — أضف المفتاح في إعدادات الخادم وليس هنا.';
+  const tasks=await fetch('/api/tasks').then(r=>r.json());
+  $('tasks').innerHTML=tasks.length?tasks.slice(0,8).map(t=>`<div class="taskrow"><b>${t.agentName}</b> — ${t.status}<br>${escapeHtml(t.task)}${t.result?'<div class="small">'+escapeHtml(t.result.slice(0,260))+'</div>':''}</div>`).join(''):'لا توجد مهام بعد.';
+  const approvals=await fetch('/api/approvals').then(r=>r.json());
+  $('approvals').innerHTML=approvals.length?approvals.map(a=>`<div class="taskrow"><b>${escapeHtml(a.title)}</b> — ${a.status}<br><button onclick="decide('${a.id}','approved')">موافقة</button><button class="secondary" onclick="decide('${a.id}','rejected')">رفض</button><div class="small">${escapeHtml(a.content.slice(0,220))}</div></div>`).join(''):'لا توجد طلبات موافقة.';
+ }catch(e){$('serverStatus').textContent='🔴 لم يتم الاتصال بالخادم بعد. شغّل الخادم أولاً.'}
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('run').onclick=async()=>{
+ const task=$('task').value.trim(); if(!task){alert('اكتب المهمة أولاً');return}
+ $('run').disabled=true;$('run').textContent='الموظف يعمل...';$('result').hidden=false;$('result').textContent='جاري تنفيذ المهمة...';
+ try{
+  const r=await fetch('/api/agents/'+$('agent').value+'/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task})});
+  const data=await r.json();if(!r.ok)throw new Error(data.error||'حدث خطأ');
+  $('result').textContent=data.task.result+(data.approvalRequired?'\n\nتم إنشاء طلب موافقة للمالك. لم يتم النشر.':'');
+  $('task').value='';await refresh();
+ }catch(e){$('result').textContent='تعذر التنفيذ: '+e.message}
+ finally{$('run').disabled=false;$('run').textContent='إرسال المهمة للموظف'}
+};
+async function decide(id,decision){try{const r=await fetch('/api/approvals/'+id+'/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({decision})});const d=await r.json();if(!r.ok)throw new Error(d.error);alert(d.note);refresh()}catch(e){alert(e.message)}}
+refresh();
+</script></body></html>
